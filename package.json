@@ -1,0 +1,9 @@
+{
+  "name": "ice-portal-mole",
+  "version": "1.0.0",
+  "description": "Leaking top-secret data from inside Inter City Express trains.",
+  "main": "index.js",
+  "author": "Jannis R <mail@jannisr.de>",
+  "contributors": ["Julius Tens <mail@juliuste.de>"],
+  "license": "ISC"
+}
