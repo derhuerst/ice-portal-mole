@@ -5,5 +5,14 @@
   "main": "index.js",
   "author": "Jannis R <mail@jannisr.de>",
   "contributors": ["Julius Tens <mail@juliuste.de>"],
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+  	"got": "^6.3"
+  },
+  "config": {
+  	"interval": 20,
+  	"portal": "http://ice.portal:3000/",
+  	"cloud": "http://ice-portal.jannisr.de:3000/",
+  	"key": "foo"
+  }
 }
