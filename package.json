@@ -14,5 +14,11 @@
   	"portal": "http://ice.portal:3000/",
   	"cloud": "http://ice-portal.jannisr.de:3000/",
   	"key": "foo"
-  }
+  },
+	"scripts": {
+		"start": "forever start -a --uid ice-portal-mole index.js",
+		"stop":  "forever stop ice-portal-mole",
+		"autostart-on":  "autostart enable -n ice-portal-mole -p $PWD -c 'npm start'",
+		"autostart-off": "autostart disable -n ice-portal-mole"
+	}
 }
