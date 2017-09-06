@@ -1,24 +1,26 @@
 {
-  "name": "ice-portal-mole",
-  "version": "1.0.0",
-  "description": "Leaking top-secret data from inside Inter City Express trains.",
-  "main": "index.js",
-  "author": "Jannis R <mail@jannisr.de>",
-  "contributors": ["Julius Tens <mail@juliuste.de>"],
-  "license": "ISC",
-  "dependencies": {
-  	"got": "^6.3"
-  },
-  "config": {
-  	"interval": 20,
-  	"portal": "http://ice.portal1",
-  	"cloud": "http://ice-portal.jannisr.de:3000/",
-  	"key": "foo"
-  },
+	"name": "ice-portal-mole",
+	"version": "1.0.0",
+	"description": "Leaking top-secret data from inside Inter City Express trains.",
+	"main": "index.js",
+	"author": "Jannis R <mail@jannisr.de>",
+	"contributors": [
+		"Julius Tens <mail@juliuste.de>"
+	],
+	"license": "ISC",
+	"dependencies": {
+		"fetch-ponyfill": "^4.1.0",
+		"pinkie-promise": "^2.0.1",
+		"wifi-on-ice-portal-client": "^0.1.0"
+	},
+	"config": {
+		"interval": 20,
+		"cloud": "http://ice-portal.jannisr.de:3000/"
+	},
 	"scripts": {
 		"start": "forever start -a --uid ice-portal-mole index.js",
-		"stop":  "forever stop ice-portal-mole",
-		"autostart-on":  "autostart enable -n ice-portal-mole -p $PWD -c 'npm start'",
+		"stop": "forever stop ice-portal-mole",
+		"autostart-on": "autostart enable -n ice-portal-mole -p $PWD -c 'npm start'",
 		"autostart-off": "autostart disable -n ice-portal-mole"
 	}
 }

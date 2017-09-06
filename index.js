@@ -1,23 +1,48 @@
 'use strict'
 
-const got = require('got')
+const portal = require('wifi-on-ice-portal-client')
+const {fetch} = require('fetch-ponyfill')({Promise: require('pinkie-promise')})
+
 const cfg = require('./package.json').config
 
-setInterval(() => {
-	Promise.all(
-		got(cfg.portal + '/api1/rs/status', {json: true})
-		got(cfg.portal + '/api1/rs/tripInfo', {json: true})
-	).then([status, trip] => {
-		got.post(cfg.cloud, {body: {
-			  when: Math.round(Date.now() / 1000)
-			  connected: status.body.connection
-			, speed: status.body.speed
-			, latitude: status.body.latitude
-			, longitude: status.body.longitude
-			, train: [trip.body.trainType, trip.body.vzn]
-			, traveledDistance: trip.body.actualPosition
-			, totalDistance: trip.body.totalDistance
-		}}).catch(console.error)
+const userAgent = 'https://github.com/derhuerst/ice-portal-mole'
 
-	}, console.error)
-}, cfg.interval * 1000)
+const submit = () => {
+	return Promise.all([
+		portal.status(),
+		portal.journey()
+	])
+	.then(([status, leg]) => ({
+		when: Math.round(Date.now() / 1000),
+		ok: status.ok,
+		speed: status.speed,
+		gpsOk: status.gpsOk,
+		latitude: status.latitude,
+		longitude: status.longitude,
+		line: leg.line,
+		// traveledDistance: leg.actualPosition,
+		// totalDistance: leg.totalDistance,
+	}))
+	.then((data) => {
+		return fetch(cfg.cloud, {
+			method: 'post',
+			mode: 'cors',
+			redirect: 'follow',
+			headers: {
+				'User-Agent': userAgent,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+	})
+	.then((res) => {
+		if (!res.ok) {
+			const err = new Error(res.statusText)
+			err.statusCode = res.status
+			throw err
+		}
+	})
+	.catch(console.error)
+}
+
+setInterval(submit, cfg.interval * 1000)
