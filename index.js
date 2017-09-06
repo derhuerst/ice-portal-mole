@@ -20,8 +20,8 @@ const submit = () => {
 		latitude: status.latitude,
 		longitude: status.longitude,
 		line: leg.line,
-		// traveledDistance: leg.actualPosition,
-		// totalDistance: leg.totalDistance,
+		traveledDistance: leg.traveledDistance,
+		totalDistance: leg.totalDistance
 	}))
 	.then((data) => {
 		return fetch(cfg.cloud, {

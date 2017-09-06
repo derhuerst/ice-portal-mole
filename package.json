@@ -11,7 +11,7 @@
 	"dependencies": {
 		"fetch-ponyfill": "^4.1.0",
 		"pinkie-promise": "^2.0.1",
-		"wifi-on-ice-portal-client": "^0.1.0"
+		"wifi-on-ice-portal-client": "^0.1.1"
 	},
 	"config": {
 		"interval": 20,
