@@ -3,7 +3,17 @@
 const portal = require('wifi-on-ice-portal-client')
 const {fetch} = require('fetch-ponyfill')({Promise: require('pinkie-promise')})
 
-const cfg = require('./package.json').config
+const endpoint = process.env.ENDPOINT
+if (!endpoint) {
+	console.error('Missing ENDPOINT env var.')
+	process.exit(1)
+}
+
+const interval = parseInt(process.env.INTERVAL || '10')
+if (Number.isNaN(interval) || interval <= 0) {
+	console.error('Invalid INTERVAL env var.')
+	process.exit(1)
+}
 
 const userAgent = 'https://github.com/derhuerst/ice-portal-mole'
 
@@ -24,7 +34,7 @@ const submit = () => {
 		totalDistance: leg.totalDistance
 	}))
 	.then((data) => {
-		return fetch(cfg.cloud, {
+		return fetch(endpoint, {
 			method: 'post',
 			mode: 'cors',
 			redirect: 'follow',
@@ -45,4 +55,4 @@ const submit = () => {
 	.catch(console.error)
 }
 
-setInterval(submit, cfg.interval * 1000)
+setInterval(submit, interval * 1000)

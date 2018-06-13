@@ -13,10 +13,6 @@
 		"pinkie-promise": "^2.0.1",
 		"wifi-on-ice-portal-client": "^0.1.1"
 	},
-	"config": {
-		"interval": 20,
-		"cloud": "http://ice-portal.jannisr.de:3000/"
-	},
 	"scripts": {
 		"start": "forever start -a --uid ice-portal-mole index.js",
 		"stop": "forever stop ice-portal-mole",
